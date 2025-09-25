@@ -1,0 +1,1295 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../rust_intro/">
+      
+      
+        <link rel="next" href="../rust_reference/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.0">
+    
+    
+      
+        <title>Rust 基本语法 - Rust Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.9f615399.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rust" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Rust Notes" class="md-header__button md-logo" aria-label="Rust Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rust Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rust 基本语法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Rust Notes" class="md-nav__button md-logo" aria-label="Rust Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Rust Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    大纲
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rust_intro/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rust 开发工具安装
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Rust 基本语法
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Rust 基本语法
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    变量和可变性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    常量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shadowing" class="md-nav__link">
+    遮蔽(shadowing)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    数据类型
+  </a>
+  
+    <nav class="md-nav" aria-label="数据类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scalar-type" class="md-nav__link">
+    标量类型 (Scalar type)
+  </a>
+  
+    <nav class="md-nav" aria-label="标量类型 (Scalar type)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    整型类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    浮点类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    布尔类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    字符类型
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    复合类型
+  </a>
+  
+    <nav class="md-nav" aria-label="复合类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    元组类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    数组类型
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    函数
+  </a>
+  
+    <nav class="md-nav" aria-label="函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    参数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    语句和表达式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    带有返回值的函数
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    注释
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    控制流
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rust_reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rust 参考
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    变量和可变性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    常量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shadowing" class="md-nav__link">
+    遮蔽(shadowing)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    数据类型
+  </a>
+  
+    <nav class="md-nav" aria-label="数据类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scalar-type" class="md-nav__link">
+    标量类型 (Scalar type)
+  </a>
+  
+    <nav class="md-nav" aria-label="标量类型 (Scalar type)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    整型类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    浮点类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    布尔类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    字符类型
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    复合类型
+  </a>
+  
+    <nav class="md-nav" aria-label="复合类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    元组类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    数组类型
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    函数
+  </a>
+  
+    <nav class="md-nav" aria-label="函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    参数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    语句和表达式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    带有返回值的函数
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    注释
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    控制流
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="rust">Rust 基本语法学习</h1>
+<p>学习内容</p>
+<ul>
+<li>变量</li>
+<li>基本类型</li>
+<li>函数</li>
+<li>注释</li>
+<li>控制流</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">关键字</p>
+<p>Rust 语言有一系列<strong>关键字（keywords）</strong>，和其他语言一样，这些关键字被保留下来只提供给语言作特殊使用。<strong>请记住，这些关键字不能用作变量或函数的名称</strong>。大多数关键字都有特殊的含义，在 Rust 程序中可使用它们执行多种任务；有少数关键字暂时没有相关联的功能，但新功能将来可能会加入到 Rust 中。在附录 A 中可找到关键字列表。</p>
+</div>
+<h2 id="_1">变量和可变性</h2>
+<p>默认情况下, <strong>变量是不可变的(immutable)</strong>.</p>
+<p>意味着如果一个值绑定到一个变量名后，就不能更改该值。</p>
+<p>如下代码</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>编译，会出现如下错误</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code>$<span class="w"> </span>cargo<span class="w"> </span>run
+<span class="w">   </span>Compiling<span class="w"> </span>variables<span class="w"> </span>v0.1.0<span class="w"> </span><span class="o">(</span>file:///projects/variables<span class="o">)</span>
+error<span class="o">[</span>E0384<span class="o">]</span>:<span class="w"> </span>cannot<span class="w"> </span>assign<span class="w"> </span>twice<span class="w"> </span>to<span class="w"> </span>immutable<span class="w"> </span>variable<span class="w"> </span><span class="sb">`</span>x<span class="sb">`</span>
+<span class="w"> </span>--&gt;<span class="w"> </span>src/main.rs:4:5
+<span class="w">  </span><span class="p">|</span>
+<span class="m">2</span><span class="w"> </span><span class="p">|</span><span class="w">     </span><span class="nb">let</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">;</span>
+<span class="w">  </span><span class="p">|</span><span class="w">         </span>-
+<span class="w">  </span><span class="p">|</span><span class="w">         </span><span class="p">|</span>
+<span class="w">  </span><span class="p">|</span><span class="w">         </span>first<span class="w"> </span>assignment<span class="w"> </span>to<span class="w"> </span><span class="sb">`</span>x<span class="sb">`</span>
+<span class="w">  </span><span class="p">|</span><span class="w">         </span>help:<span class="w"> </span>consider<span class="w"> </span>making<span class="w"> </span>this<span class="w"> </span>binding<span class="w"> </span>mutable:<span class="w"> </span><span class="sb">`</span>mut<span class="w"> </span>x<span class="sb">`</span>
+<span class="m">3</span><span class="w"> </span><span class="p">|</span><span class="w">     </span>println!<span class="o">(</span><span class="s2">&quot;The value of x is: {}&quot;</span>,<span class="w"> </span>x<span class="o">)</span><span class="p">;</span>
+<span class="m">4</span><span class="w"> </span><span class="p">|</span><span class="w">     </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">;</span>
+<span class="w">  </span><span class="p">|</span><span class="w">     </span>^^^^^<span class="w"> </span>cannot<span class="w"> </span>assign<span class="w"> </span>twice<span class="w"> </span>to<span class="w"> </span>immutable<span class="w"> </span>variable
+
+For<span class="w"> </span>more<span class="w"> </span>information<span class="w"> </span>about<span class="w"> </span>this<span class="w"> </span>error,<span class="w"> </span>try<span class="w"> </span><span class="sb">`</span>rustc<span class="w"> </span>--explain<span class="w"> </span>E0384<span class="sb">`</span>.
+error:<span class="w"> </span>could<span class="w"> </span>not<span class="w"> </span>compile<span class="w"> </span><span class="sb">`</span>variables<span class="sb">`</span><span class="w"> </span>due<span class="w"> </span>to<span class="w"> </span>previous<span class="w"> </span>error
+</code></pre></div></td></tr></table></div>
+<strong>上面的错误指出错误的原因是 cannot assign twice to immutable variable <code>x</code>（不能对不可变变量二次赋值），因为我们尝试给不可变的 x 变量赋值为第二个值。</strong></p>
+<p>变量只是默认不可变的, 我们可以通过在变量名前加上 <strong>mut</strong> 使得它们可变。<strong>增加 mut 的操作还向以后的读代码的人传达了代码的其他部分将会改变这个变量值</strong>。</p>
+<p>上面代码可以改为</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_2">常量</h2>
+<p>与<strong>不可变变量</strong>类似，常量（constant）是绑定到一个<strong>常量名且不允许更改的值</strong>，但是常量和变量之间存在一些差异。</p>
+<ul>
+<li>常量不允许使用 mut。常量不仅仅默认不可变，而且自始至终不可变.</li>
+<li>常量使用 <strong>const</strong> 关键字而不是 let 关键字来声明, 并且<strong>值的类型必须注明</strong>.</li>
+<li>常量可以在<strong>任意作用域</strong>内声明，包括全局作用域.</li>
+<li>常量只能设置为常量表达式</li>
+</ul>
+<p>例如</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="n">THREE_HOURS_IN_SECONDS</span>: <span class="kt">u32</span> <span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</code></pre></div></td></tr></table></div>
+<p>Rust 常量的命名约定是<strong>全部字母都使用大写</strong>, 并使用下划线分隔单词.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>将整个程序中用到的硬编码（hardcode）值命名为常量，对于将该值的含义传达给代码的未来维护者很有用。如果将来需要更改硬编码的值，则只需要在代码中改动一处就可以了。</p>
+</div>
+<h2 id="shadowing">遮蔽(shadowing)</h2>
+<p>Rust 中可以声明和前面变量具有相同名称的新变量，则第一个变量被第二个变量遮蔽（shadow），这意味着当我们使用变量时我们看到的会是第二个变量的值。我们可以通过使用相同的变量名并重复使用 let 关键字来遮蔽变量，如下所示：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x in the inner scope is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>运行结果</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code>$<span class="w"> </span>cargo<span class="w"> </span>run
+<span class="w">   </span>Compiling<span class="w"> </span>variables<span class="w"> </span>v0.1.0<span class="w"> </span><span class="o">(</span>file:///projects/variables<span class="o">)</span>
+<span class="w">    </span>Finished<span class="w"> </span>dev<span class="w"> </span><span class="o">[</span>unoptimized<span class="w"> </span>+<span class="w"> </span>debuginfo<span class="o">]</span><span class="w"> </span>target<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.31s
+<span class="w">     </span>Running<span class="w"> </span><span class="sb">`</span>target/debug/variables<span class="sb">`</span>
+The<span class="w"> </span>value<span class="w"> </span>of<span class="w"> </span>x<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>inner<span class="w"> </span>scope<span class="w"> </span>is:<span class="w"> </span><span class="m">12</span>
+The<span class="w"> </span>value<span class="w"> </span>of<span class="w"> </span>x<span class="w"> </span>is:<span class="w"> </span><span class="m">6</span>
+</code></pre></div></td></tr></table></div>
+<p>遮蔽(shadow) 和 mut 变量的差异：</p>
+<ol>
+<li>使用 let，我们可以对一个值进行转换，但在这些转换完成后，变量将是不可变的。</li>
+<li>使用 let 关键字时有效地创建了一个新的变量，所以我们可以改变值的类型，但重复使用相同的名称</li>
+</ol>
+<p>例子</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;   &quot;</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spaces</span><span class="p">.</span><span class="n">len</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<strong>=&gt;</strong> 以上编译没有问题， 第一行是string类型的变量，第二行是整型的变量</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;   &quot;</span><span class="p">;</span>
+<span class="n">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spaces</span><span class="p">.</span><span class="n">len</span><span class="p">();</span>
+</code></pre></div></td></tr></table></div>
+<strong>=&gt;</strong> 会出现编译出错，该错误表明不允许改变变量的类型</p>
+<h2 id="_3">数据类型</h2>
+<p>Rust是中静态类型语言，每一个变量都有确定的数据类型(data type)，意味着rust必须在编译期间就要确定所有变量的类型。</p>
+<p>数据类型分为两种类型</p>
+<ul>
+<li>标量类型</li>
+<li>复合类型</li>
+</ul>
+<h3 id="scalar-type">标量类型 (Scalar type)</h3>
+<p>有4种基本的变量类型</p>
+<ul>
+<li>整型</li>
+<li>浮点型</li>
+<li>布尔型</li>
+<li>字符</li>
+</ul>
+<h4 id="_4">整型类型</h4>
+<p>下表显示了Rust中内置的整型类型</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>有符号类型</th>
+<th>无符号类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8 位</td>
+<td>i8</td>
+<td>u8</td>
+</tr>
+<tr>
+<td>16 位</td>
+<td>i16</td>
+<td>u16</td>
+</tr>
+<tr>
+<td>32 位</td>
+<td>i32</td>
+<td>u32</td>
+</tr>
+<tr>
+<td>64 位</td>
+<td>i64</td>
+<td>u64</td>
+</tr>
+<tr>
+<td>128 位</td>
+<td>i128</td>
+<td>u128</td>
+</tr>
+<tr>
+<td>arch</td>
+<td>isize</td>
+<td>usize</td>
+</tr>
+</tbody>
+</table>
+<p>有符号类型规定的数字范围是 <span class="arithmatex">\(-(2^{n - 1}) \sim 2^{n - 1} - 1\)</span>，其中 n 是该定义形式的位长度。所以 i8 可存储数字范围是 <span class="arithmatex">\(-(2^7) \sim 2^7 - 1\)</span>，即 -128 ~ 127。</p>
+<p>无符号类型可以存储的数字范围是 <span class="arithmatex">\(0 \sim 2^{n - 1}\)</span>，所以 u8 能够存储的数字为 <span class="arithmatex">\(0 \sim 2^8 - 1\)</span>，即 0 ~ 255。</p>
+<p>另外， <code>isize</code> 和 <code>usize</code> 类型 取决于程序运行的计算机体系结构，
+- 若 "arch" 是64位架构系统，则变表示64位
+- 若 "arch" 是32位架构系统，则变表示32位</p>
+<table>
+<thead>
+<tr>
+<th>数字字面量</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>十进制</td>
+<td>98_222</td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td>0xff</td>
+</tr>
+<tr>
+<td>八进制</td>
+<td>0o77</td>
+</tr>
+<tr>
+<td>二进制</td>
+<td>0b1111_0000</td>
+</tr>
+<tr>
+<td>字节 (仅限于 u8)</td>
+<td>b'A'</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5">浮点类型</h4>
+<ul>
+<li>f32: 32位</li>
+<li>f64: 64位</li>
+</ul>
+<p>默认浮点类型是f64</p>
+<p>所有浮点型都是有符号数</p>
+<p>浮点数按照 IEEE-754 标准表示。f32 类型是单精度浮点型，f64 为双精度浮点型</p>
+<h4 id="_6">布尔类型</h4>
+<p>Rust 中的布尔类型也有两个可能的值：true 和 false</p>
+<p>布尔值的大小为 1 个字节。Rust 中的布尔类型使用 <code>bool</code> 声明</p>
+<h4 id="_7">字符类型</h4>
+<p>Rust 的 char（字符）类型是该语言最基本的字母类型</p>
+<div class="admonition note">
+<p class="admonition-title">注意：字符与字符串差异</p>
+<p>我们声明的 char 字面量采用单引号括起来，这与字符串字面量不同，字符串字面量是用双引号括起来</p>
+</div>
+<p>Rust 的字符类型大小为 <strong>4 个字节</strong>，表示的是一个 Unicode 标量值，这意味着它可以表示的远远不止是 ASCII。标音字母，中文/日文/韩文的文字，emoji，还有零宽空格(zero width space)在 Rust 中都是合法的字符类型。Unicode 值的范围为 U+0000 ~ U+D7FF 和 U+E000~U+10FFFF</p>
+<h3 id="_8">复合类型</h3>
+<p>复合类型（compound type）可以将多个值组合成一个类型。Rust 有两种基本的复合类型：</p>
+<ul>
+<li>元组（tuple）</li>
+<li>数组（array）</li>
+</ul>
+<h4 id="_9">元组类型</h4>
+<p>元组是将多种类型的多个值组合到一个复合类型中的一种基本方式。元组的长度是固定的：声明后，它们就无法增长或缩小。</p>
+<p>通过在小括号内写入以逗号分隔的值列表来创建一个元组。元组中的每个位置都有一个类型，并且元组中不同值的类型不要求是相同的</p>
+<p>例如</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">tup</span>: <span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">f64</span><span class="p">,</span><span class="w"> </span><span class="kt">u8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mf">6.4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>变量 tup 绑定到整个元组，因为元组被认作是单个复合元素。 想从元组中获取个别值，我们可以使用模式匹配来解构（destructure）元组的一个值，如下所示：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">tup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mf">6.4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tup</span><span class="p">;</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of y is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>该程序首先创建一个元组并将其绑定到变量 tup 上。 然后它借助 let 来使用一个模式匹配 tup，并将它分解成三个单独的变量 x、y 和 z。 这过程称为解构（destructuring）</p>
+<p>y即为6.4</p>
+<p>除了通过模式匹配进行解构外，我们还可以使用一个句点（.）连上要访问的值的索引来直接访问元组元素。例如：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span>: <span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">f64</span><span class="p">,</span><span class="w"> </span><span class="kt">u8</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="mf">6.4</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">five_hundred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">six_point_four</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>该程序创建一个元组 x，然后通过使用它们的索引为每个元素创建新的变量。和大多数编程语言一样，元组中的第一个索引为 0</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>没有任何值的元组 () 是一种特殊的类型，只有一个值，也写成 ()。该类型被称为<strong>单元类型</strong>（unit type），该值被称为单元值（unit value）。如果表达式不返回任何其他值，就隐式地返回单元值。</p>
+</div>
+<h4 id="_10">数组类型</h4>
+<p>将多个值组合在一起的另一种方式就是使用数组（array）。与元组不同，<strong>数组的每个元素必须具有相同的类型</strong>。与某些其他语言中的数组不同，Rust 中的数组具有固定长度。</p>
+<p>方括号内以逗号分隔的列表形式将值写到数组中</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">months</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;January&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;February&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;March&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;April&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;May&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;June&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;July&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="s">&quot;August&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;September&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;October&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;November&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;December&quot;</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>使用方括号编写数组的类型，其中包含每个元素的类型、分号，然后是数组中的元素数，如下所示：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="p">[</span><span class="kt">i32</span><span class="p">;</span><span class="w"> </span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span>
+</code></pre></div></td></tr></table></div>
+<p>i32 是每个元素的类型。分号之后，数字 5 表明该数组包含 5 个元素</p>
+<p>如果要为每个元素创建包含相同值的数组，可以指定初始值，后跟分号，然后在方括号中指定数组的长度，如下所示</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span>
+</code></pre></div></td></tr></table></div>
+<p>变量名为 a 的数组将包含 5 个元素，这些元素的值初始化为 3。这种写法与 let a = [3, 3, 3, 3, 3]; 效果相同，但更简洁。</p>
+<p><strong>访问数组元素</strong></p>
+<p>数组是可以在栈上分配的已知固定大小的单个内存块。可以使用索引访问数组的元素</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p><strong>无效的数组元素访问</strong></p>
+<p>如果尝试访问超出数组末尾的数组元素,Rust 将检查你指定的索引是否小于数组长度。如果索引大于或等于数组长度，Rust 会出现 panic。这种检查必须在运行时进行，尤其是在这种情况下，因为编译器可能无法知道用户之后运行代码时将输入什么值。</p>
+<h2 id="_11">函数</h2>
+<p>前面例子已经见过 main 函数，它是很多程序的入口点。你也见过 fn 关键字，它用来声明新函数</p>
+<p>Rust 代码中的函数和变量名使用下划线命名法（snake case，直译为蛇形命名法）规范风格。在下划线命名法中，所有字母都是小写并使用下划线分隔单词</p>
+<p>Rust 中的函数定义以 fn 开始，后跟着函数名和一对圆括号。大括号告诉编译器函数体在哪里开始和结束</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">another_function</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">another_function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Another function.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>源码中 another_function 定义在 main 函数<strong>之后</strong>；也可以定义在<strong>之前</strong>。Rust 不关心函数定义于何处，只要定义了就行</p>
+<h3 id="_12">参数</h3>
+<p>函数也可以被定义为拥有参数（parameter），参数是特殊变量，是函数签名的一部分。当函数拥有参数（<strong>形参</strong>）时，可以为这些参数提供具体的值（<strong>实参</strong>）</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">another_function</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">another_function</span><span class="p">(</span><span class="n">x</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>another_function 的声明中有一个命名为 x 的参数。x 的类型被指定为 i32。当将 5 传给 another_function 时，println! 宏将 5 放入格式化字符串中大括号的位置。</p>
+<p>当一个函数有多个参数时，使用逗号分隔</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">print_labeled_measurement</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;h&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">print_labeled_measurement</span><span class="p">(</span><span class="n">value</span>: <span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="n">unit_label</span>: <span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The measurement is: {}{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">unit_label</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_13">语句和表达式</h3>
+<p>函数体由一系列语句组成，也可选地以表达式结尾。目前为止，我们介绍的函数还没有包含结尾表达式，</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Rust 是一门基于表达式（expression-based）的语言</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">语句 vs 表达式</p>
+<p>语句（statement）是执行一些操作但不返回值的指令。表达式（expression）计算并产生一个值。</p>
+</div>
+<p>使用 let 关键字创建变量并绑定一个值是<strong>一个语句</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>函数定义也是语句，上面整个例子本身就是一个语句。</p>
+<p><strong>语句不返回值</strong></p>
+<p>因此，不能把 let 语句赋值给另一个变量，就像下面的代码尝试做的那样，会产生一个错误：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>let y = 6 语句并不返回值，所以没有可以绑定到 x 上的值。</p>
+<p>这与其他语言不同，例如 C 和 Ruby，它们的赋值语句会返回所赋的值。
+在这些语言中，可以这么写 x = y = 6，这样 x 和 y 的值都是 6；
+<strong>Rust 中不能这样写</strong>。</p>
+<p>表达式会计算出一个值，并且你接下来要用 Rust 编写的大部分代码都由表达式组成。</p>
+<ul>
+<li>考虑一个数学运算，比如 5 + 6，这是一个表达式并计算出值 11。</li>
+<li>表达式可以是语句的一部分：在示例 3-1 中，语句 let y = 6; 中的 6 是一个表达式，它计算出的值是 6。</li>
+<li>函数调用是一个表达式。</li>
+<li>宏调用是一个表达式。</li>
+<li>我们用来创建新作用域的大括号（代码块） {} 也是一个表达式</li>
+</ul>
+<p>例如</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of y is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>其中如下是一个表达式</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+是一个代码块，在这个例子中计算结果是4. 这个值作为 let 语句的一部分被绑定到 y 上</p>
+<div class="admonition note">
+<p class="admonition-title">注意</p>
+<p>x + 1 行的末尾<strong>没有分号</strong>，这与你目前见过的大部分代码行不同。<strong>表达式的结尾没有分号</strong>。</p>
+<p><strong>如果在表达式的末尾加上分号，那么它就转换为语句，而语句不会返回值.</strong></p>
+</div>
+<h3 id="_14">带有返回值的函数</h3>
+<p>函数可以向调用它的代码返回值。我们并不对返回值命名，但要在<strong>箭头（-&gt;）后声明它的类型</strong>。
+在 Rust 中，<strong>函数的返回值等同于函数体最后一个表达式的值</strong>。
+使用 <strong>return 关键字和指定值，可从函数中提前返回</strong>；但<strong>大部分函数隐式的返回最后的表达式</strong>。这是一个有返回值的函数的例子：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">five</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
+<span class="w">    </span><span class="mi">5</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">five</span><span class="p">();</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>在 five 函数中没有函数调用、宏，甚至没有 let 语句——只有数字 5 本身。这在 Rust 中是一个完全有效的函数。注意，函数返回值的类型也被指定好，即 <code>-&gt; i32</code></p>
+<p>five 函数的返回值是 5，所以返回值类型是 i32</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plus_one</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">x</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>运行代码会打印出 The value of x is: 6</p>
+<p>如果在包含 x + 1 的行尾加上一个分号，把它从表达式变成语句，我们将得到一个错误</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plus_one</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The value of x is: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">x</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>运行代码会产生一个错误，如下：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code>$<span class="w"> </span>cargo<span class="w"> </span>run
+<span class="w">   </span>Compiling<span class="w"> </span>functions<span class="w"> </span>v0.1.0<span class="w"> </span><span class="o">(</span>file:///projects/functions<span class="o">)</span>
+error<span class="o">[</span>E0308<span class="o">]</span>:<span class="w"> </span>mismatched<span class="w"> </span>types
+<span class="w"> </span>--&gt;<span class="w"> </span>src/main.rs:7:24
+<span class="w">  </span><span class="p">|</span>
+<span class="m">7</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>fn<span class="w"> </span>plus_one<span class="o">(</span>x:<span class="w"> </span>i32<span class="o">)</span><span class="w"> </span>-&gt;<span class="w"> </span>i32<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="p">|</span><span class="w">    </span>--------<span class="w">            </span>^^^<span class="w"> </span>expected<span class="w"> </span><span class="sb">`</span>i32<span class="sb">`</span>,<span class="w"> </span>found<span class="w"> </span><span class="sb">`</span><span class="o">()</span><span class="sb">`</span>
+<span class="w">  </span><span class="p">|</span><span class="w">    </span><span class="p">|</span>
+<span class="w">  </span><span class="p">|</span><span class="w">    </span>implicitly<span class="w"> </span>returns<span class="w"> </span><span class="sb">`</span><span class="o">()</span><span class="sb">`</span><span class="w"> </span>as<span class="w"> </span>its<span class="w"> </span>body<span class="w"> </span>has<span class="w"> </span>no<span class="w"> </span>tail<span class="w"> </span>or<span class="w"> </span><span class="sb">`</span><span class="k">return</span><span class="sb">`</span><span class="w"> </span>expression
+<span class="m">8</span><span class="w"> </span><span class="p">|</span><span class="w">     </span>x<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">  </span><span class="p">|</span><span class="w">          </span>-<span class="w"> </span>help:<span class="w"> </span>consider<span class="w"> </span>removing<span class="w"> </span>this<span class="w"> </span>semicolon
+
+For<span class="w"> </span>more<span class="w"> </span>information<span class="w"> </span>about<span class="w"> </span>this<span class="w"> </span>error,<span class="w"> </span>try<span class="w"> </span><span class="sb">`</span>rustc<span class="w"> </span>--explain<span class="w"> </span>E0308<span class="sb">`</span>.
+error:<span class="w"> </span>could<span class="w"> </span>not<span class="w"> </span>compile<span class="w"> </span><span class="sb">`</span>functions<span class="sb">`</span><span class="w"> </span>due<span class="w"> </span>to<span class="w"> </span>previous<span class="w"> </span>error
+</code></pre></div></td></tr></table></div>
+<p>主要的错误信息 "mismatched types"（类型不匹配）揭示了这段代码的核心问题</p>
+<p>函数 plus_one 的定义说明它要返回一个 i32 类型的值，不过语句并不会返回值，此值由单位类型 () 表示，表示不返回值。因为不返回值与函数定义相矛盾，从而出现一个错误。在输出中，Rust 提供了一条信息，可能有助于纠正这个错误：它建议删除分号，这将修复错误。</p>
+<h2 id="_15">注释</h2>
+<p>有时需要在源码中对程序进行解释。在这种情况下，开发者在他们的源码中留下<strong>注释</strong>，编译器将会忽略掉这些内容，但阅读源码的人可能会发现有用</p>
+<p>Rust 中，惯用的注释形式以两个斜杆开头，直到该行尾结束。对于超出单行的注释，需要在每行的行首加上 //，如下所示：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1">// 我们在这里处理一些复杂事情，需要足够长的解释，使用</span>
+<span class="c1">// 多行注释可做到这点。哇！我们希望这个注释将解释接下</span>
+<span class="c1">// 来要实现的内容。</span>
+</code></pre></div></td></tr></table></div>
+<p>注释也可以放在包含代码的行后面：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">lucky_number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span><span class="w"> </span><span class="c1">// I’m feeling lucky today</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>不过下面的这种格式会更常见，将注释放到需要解释的代码上面的单独行：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// I’m feeling lucky today</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">lucky_number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_16">控制流</h2>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.4e0fa4ba.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+      
+        <script src="../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
