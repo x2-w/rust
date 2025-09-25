@@ -1,0 +1,2 @@
+- [Rust 文档网](https://www.rustwiki.org.cn/)
+- [Rust 程序设计语言 中文版](https://www.rustwiki.org.cn/zh-CN/book/title-page.html)
