@@ -552,3 +552,261 @@ fn main() {
 
 ## 控制流
 
+根据条件是否为真来决定是否执行某些代码，或根据条件是否为真来重复运行一段代码，是大部分编程语言的基本组成部分。Rust 代码中最常见的用来控制执行流的结构是 **if 表达式** 和 **循环**。
+
+### if 表达式
+
+**if 表达式都以 if 关键字开头，其后跟一个条件**, 也可以包含一个可选的 else 表达式来提供一个在条件为假时应当执行的代码块.
+
+if 表达式允许根据条件执行不同的代码分支。你提供一个条件并表示 "如果条件满足，运行这段代码；如果条件不满足，不运行这段代码。"
+
+```rust
+fn main() {
+    let number = 3;
+
+    if number < 5 {
+        println!("condition was true");
+    } else {
+        println!("condition was false");
+    }
+}
+```
+
+if 表达式中与条件关联的代码块有时被叫做**分支**
+
+!!! warning
+    if 表达式中的条件必须是 bool 值。如果条件不是 bool 值，我们将得到一个错误
+
+例如（错误示例）
+
+```rust
+fn main() {
+    let number = 3;
+
+    if number {
+        println!("number was three");
+    }
+}
+```
+if 条件的值是 3，Rust 抛出了一个错误
+
+```bash
+$ cargo run
+   Compiling branches v0.1.0 (file:///projects/branches)
+error[E0308]: mismatched types
+ --> src/main.rs:4:8
+  |
+4 |     if number {
+  |        ^^^^^^ expected `bool`, found integer
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `branches` due to previous error
+```
+
+这个错误表明 Rust 期望一个 bool 却得到了一个整数.
+
+Rust 并不会尝试自动地将非布尔值转换为布尔值。你必须自始至终显式地使用布尔值作为 if 的条件
+
+#### 使用 else if 处理多重条件
+
+**可以将 if 和 else 组成的 else if 表达式来实现多重条件**
+
+例如
+
+```rust
+fn main() {
+    let number = 6;
+
+    if number % 4 == 0 {
+        println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+        println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+        println!("number is divisible by 2");
+    } else {
+        println!("number is not divisible by 4, 3, or 2");
+    }
+}
+```
+
+**当执行这个程序时，它按顺序检查每个 if 表达式并执行第一个条件为真的代码块**
+
+!!! warning
+    注意即使 6 可以被 2 整除，也不会输出 number is divisible by 2，更不会输出 else 块中的 number is not divisible by 4, 3, or 2。原因是 Rust 只会执行**第一个条件为真**的代码块，并且一旦它找到一个以后，甚至都不会检查剩下的条件了。
+
+使用过多的 else if 表达式会使代码显得杂乱无章，所以如果有多于一个 else if 表达式，最好重构代码。为处理这些情况，第 6 章会介绍一个强大的 Rust 分支结构（branching construct），叫做 **match**
+
+#### 在 let 语句中使用 if
+
+因为 if 是一个表达式，我们可以在 let 语句的右侧使用它来将结果赋值给一个变量，例如：
+
+```rust
+fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 };
+
+    println!("The value of number is: {}", number);
+}
+```
+
+number 变量将会绑定到表示 if 表达式结果的值上。
+
+**代码块的值是其最后一个表达式的值，而数字本身就是一个表达式**
+
+if 的每个分支的可能的**返回值都必须是相同类型**
+
+### 循环表达式
+
+多次执行同一段代码是很常用的，Rust 为此提供了多种循环（loop），它们遍历执行循环体中的代码直到结尾并紧接着回到开头继续执行
+
+Rust 有三种循环：
+
+- loop
+- while
+- for
+
+#### loop
+
+loop 关键字告诉 Rust 一遍又一遍地执行一段代码直到你明确要求停止
+
+```rust
+fn main() {
+    loop {
+        println!("again!");
+    }
+}
+```
+
+!!! note "关键字break和continue在循环中的用途"
+    **Rust 也提供了一种从代码中跳出循环的方法。可以使用 break 关键字来告诉程序何时停止循环**,
+
+    **循环中的 continue 关键字告诉程序跳过这个循环迭代中的任何剩余代码，并转到下一个迭代。**
+
+    如果存在嵌套循环，break 和 continue 应用于此时最内层的循环。你可以选择在一个循环上指定一个循环标签（loop label），然后将标签与 break 或 continue 一起使用，使这些关键字应用于已标记的循环而不是最内层的循环。
+
+例如
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("count = {}", count);
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining = {}", remaining);
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("End count = {}", count);
+}
+```
+
+外层循环有一个标签 **counting_up**, 它将从 0 数到 2。没有标签的内部循环从 10 向下数到 9。
+**第一个没有指定标签的 break 将只退出内层循环**。
+**break 'counting_up; 语句将退出外层循环**。
+
+#### 从循环返回
+
+loop 的一个用例是重试可能会失败的操作，比如检查线程是否完成了任务。然而你可能会需要将操作的结果从循环中传递给其它的代码。为此，你可以在用于停止循环的 break 表达式添加你想要返回的值；该值将从循环中返回，以便您可以使用它
+
+```rust
+fn main() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!("The result is {}", result);
+}
+```
+
+在循环之前，我们声明了一个名为 counter 的变量并初始化为 0。接着声明了一个名为 result 来存放循环的返回值。
+循环的每一次迭代中，我们将 counter 变量加 1，接着检查计数是否等于 10。当相等时，使用 break 关键字返回值 counter * 2。循环之后，我们通过分号结束赋值给 result 的语句。最后打印出 result 的值，也就是 20。
+
+#### while
+
+在程序中计算循环的条件也很常见。当条件为真，执行循环。当条件不再为真，调用 break 停止循环。这个循环类型可以通过组合 loop、if、else 和 break 来实现；
+然而，这个模式太常用了，Rust 为此内置了一个语言结构，它被称为 **while 循环**
+
+```rust
+fn main() {
+    let mut number = 3;
+
+    while number != 0 {
+        println!("{}!", number);
+
+        number -= 1;
+    }
+
+    println!("LIFTOFF!!!");
+}
+```
+
+这种结构消除了很多使用 loop、if、else 和 break 时所必须的嵌套，这样更加清晰。当条件为真就执行，否则退出循环。
+
+#### for
+
+可以使用 while 结构来遍历集合中的元素，比如数组。例如，示例 3-4 中的循环打印数组 a 中的每个元素。
+
+```rust
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+    let mut index = 0;
+
+    while index < 5 {
+        println!("the value is: {}", a[index]);
+
+        index += 1;
+    }
+}
+```
+在这里，代码对数组中的元素进行计数。它从索引 0 开始，并接着循环直到遇到数组的最后一个索引（即 index < 5 不再为真时）
+
+这个过程很容易出错；如果索引值或测试条件不正确会导致程序 panic。
+这也使程序更慢，因为编译器增加了运行时代码来对每次循环进行条件检查，以确定在循环的每次迭代中索引是否在数组的边界内。
+
+
+作为更简洁的替代方案，可以使用 `for` 循环来对一个集合的每个元素执行一些代码
+
+```rust
+fn main() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a {
+        println!("the value is: {}", element);
+    }
+}
+```
+这段代码结果和上面一致。但是增强了代码安全性，并消除了可能由于超出数组的结尾或遍历长度不够而缺少一些元素而导致的 bug。
+
+使用 `for` 循环的话，就不需要惦记着在改变数组元素个数时修改其他的代码。
+
+`for` 循环的安全性和简洁性使得它成为 Rust 中使用最多的循环结构
+
+即使是在想要循环执行代码特定次数时，大部分 Rust 开发人员也会使用 `for` 循环。这么做的方式是使用 `Range`,它是标准库提供的类型，用来生成从一个数字开始到另一个数字之前结束的所有数字的序列。
+
+下面是一个使用 for 循环来倒计时的例子，它还使用了一个我们还未讲到的方法，`rev`，用来反转区间（range）:
+
+```rust
+fn main() {
+    for number in (1..4).rev() {
+        println!("{}!", number);
+    }
+    println!("LIFTOFF!!!");
+}
+```
+
